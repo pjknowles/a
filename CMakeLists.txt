@@ -12,7 +12,16 @@ FetchContent_Populate(b)
 file(REMOVE_RECURSE ${b_BINARY_DIR})
 message(b_SOURCE_DIR:${b_SOURCE_DIR})
 add_subdirectory(${b_SOURCE_DIR} ${b_BINARY_DIR})
+execute_process(
+        COMMAND echo "after add_subdirectory"
+        COMMAND ls -l ${CMAKE_CURRENT_BINARY_DIR}/./_deps/b-build/CMakeFiles/b.dir/DependInfo.cmake
+        )
 
 add_executable(a main.cpp)
 target_include_directories(a PRIVATE ${b_SOURCE_DIR})
 target_link_libraries(a PRIVATE b)
+
+execute_process(
+        COMMAND echo "at end of cmakelists"
+        COMMAND ls -l ${CMAKE_CURRENT_BINARY_DIR}/./_deps/b-build/CMakeFiles/b.dir/DependInfo.cmake
+)
